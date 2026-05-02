@@ -1,0 +1,40 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run Analyzer (before)",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "args": [
+        "analyze",
+        "--repo", "sample-apps/legacy-spring-app",
+        "--output", "modernization-output-before"
+      ],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Run Analyzer (after)",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "args": [
+        "analyze",
+        "--repo", "sample-apps/legacy-spring-app",
+        "--output", "modernization-output-after"
+      ],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}"
+    },
+    {
+      "name": "Compare Before vs After",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/compare_runs.py",
+      "args": ["modernization-output-before", "modernization-output-after"],
+      "console": "integratedTerminal",
+      "cwd": "${workspaceFolder}"
+    }
+  ]
+}
