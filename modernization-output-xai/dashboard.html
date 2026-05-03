@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Modernization Dashboard</title>
+<style>
+  body { font-family: system-ui, sans-serif; margin: 2rem; background: #f8f9fa; color: #212529; }
+  h1 { color: #1a1a2e; }
+  .cards { display: flex; gap: 1rem; margin: 1.5rem 0; flex-wrap: wrap; }
+  .card { padding: 1.2rem 2rem; border-radius: 8px; color: #fff; min-width: 120px; text-align: center; }
+  .card .num { font-size: 2.5rem; font-weight: 700; }
+  .card .label { font-size: 0.85rem; opacity: 0.85; }
+  .critical { background: #dc3545; } .high { background: #fd7e14; }
+  .medium { background: #ffc107; color: #212529; } .low { background: #0d6efd; }
+  table { border-collapse: collapse; width: 100%; background: #fff; border-radius: 8px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.1); }
+  th { background: #343a40; color: #fff; padding: .7rem 1rem; text-align: left; }
+  td { padding: .6rem 1rem; border-bottom: 1px solid #dee2e6; font-size: .9rem; }
+  tr:hover { background: #f1f3f5; }
+  .sev-critical td:first-child { color: #dc3545; font-weight: 600; }
+  .sev-high td:first-child { color: #fd7e14; font-weight: 600; }
+  .sev-medium td:first-child { color: #856404; font-weight: 600; }
+  code { background: #e9ecef; padding: 1px 4px; border-radius: 3px; font-size: .82rem; }
+</style>
+</head>
+<body>
+<h1>🔍 Modernization Dashboard</h1>
+<p>Repository: <code>C:\Users\Aditya\OneDrive\Desktop\bob-modernization-navigator\bob-modernization-navigator\sample-apps\legacy-spring-app</code> &nbsp;|&nbsp;
+   Type: <strong>spring-boot-or-java</strong> &nbsp;|&nbsp;
+   Total findings: <strong>10</strong></p>
+<div class="cards">
+  <div class="card critical"><div class="num">2</div><div class="label">Critical</div></div>
+  <div class="card high"><div class="num">2</div><div class="label">High</div></div>
+  <div class="card medium"><div class="num">6</div><div class="label">Medium</div></div>
+  <div class="card low"><div class="num">0</div><div class="label">Low</div></div>
+</div>
+<table>
+  <thead><tr><th>Severity</th><th>Category</th><th>Title</th><th>File</th><th>Recommendation</th></tr></thead>
+  <tbody><tr class='sev-critical'><td>🔴 critical</td><td>security</td><td>Possible hardcoded secret</td><td><code>src\main\resources\application.properties</code></td><td>Move secrets to env vars or secret managers.</td></tr>
+<tr class='sev-critical'><td>🔴 critical</td><td>security</td><td>Possible hardcoded secret</td><td><code>src\main\resources\application.properties</code></td><td>Move secrets to env vars or secret managers.</td></tr>
+<tr class='sev-high'><td>🟠 high</td><td>deprecated-api</td><td>Deprecated Spring Security: WebSecurityConfigurerAdapter</td><td><code>src\main\java\com\example\SecurityConfig.java</code></td><td>Replace with a SecurityFilterChain bean and Spring Security 6+ DSL.</td></tr>
+<tr class='sev-high'><td>🟠 high</td><td>security</td><td>Possible SQL injection risk</td><td><code>src\main\java\com\example\repository\UserRepository.java</code></td><td>Use parameterized queries or Spring Data abstractions.</td></tr>
+<tr class='sev-medium'><td>🟡 medium</td><td>dependency</td><td>Legacy dependency: junit:junit</td><td><code>pom.xml</code></td><td>Review and replace with a supported dependency.</td></tr>
+<tr class='sev-medium'><td>🟡 medium</td><td>security</td><td>Permissive CORS: @CrossOrigin("*")</td><td><code>src\main\java\com\example\controller\UserController.java</code></td><td>Restrict allowed origins to trusted domains.</td></tr>
+<tr class='sev-medium'><td>🟡 medium</td><td>test-gap</td><td>Missing test: UserController</td><td><code>src\main\java\com\example\controller\UserController.java</code></td><td>Create UserControllerTest.java for happy path, invalid input, edge cases, and exceptions.</td></tr>
+<tr class='sev-medium'><td>🟡 medium</td><td>test-gap</td><td>Missing test: User</td><td><code>src\main\java\com\example\model\User.java</code></td><td>Create UserTest.java for happy path, invalid input, edge cases, and exceptions.</td></tr>
+<tr class='sev-medium'><td>🟡 medium</td><td>test-gap</td><td>Missing test: UserRepository</td><td><code>src\main\java\com\example\repository\UserRepository.java</code></td><td>Create UserRepositoryTest.java for happy path, invalid input, edge cases, and exceptions.</td></tr>
+<tr class='sev-medium'><td>🟡 medium</td><td>test-gap</td><td>Missing test: UserService</td><td><code>src\main\java\com\example\service\UserService.java</code></td><td>Create UserServiceTest.java for happy path, invalid input, edge cases, and exceptions.</td></tr>
+</tbody>
+</table>
+</body>
+</html>

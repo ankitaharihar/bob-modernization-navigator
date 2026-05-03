@@ -12,6 +12,7 @@ import json
 from collections import defaultdict
 from pathlib import Path
 from src.models import ModernizationResult, Severity
+from src.xai.explanation_engine import enrich_findings
 
 
 SEVERITY_EMOJI = {
@@ -37,8 +38,9 @@ class ReportGenerator:
 
     def _write_main_report(self, result: ModernizationResult) -> None:
         p = result.profile
+        enriched_findings = enrich_findings(result.findings_sorted)
         by_cat = defaultdict(list)
-        for f in result.findings_sorted:
+        for f in enriched_findings:
             by_cat[f.category].append(f)
 
         lines = [
@@ -67,6 +69,8 @@ class ReportGenerator:
                 lines.append(f"| {SEVERITY_EMOJI[sev]} {sev.value.capitalize()} | {count} |")
 
         lines.append(f"\n**Total findings:** {len(result.findings)}\n")
+
+        lines.extend(self._write_xai_section(enriched_findings))
 
         for cat, findings in by_cat.items():
             lines += [
@@ -111,6 +115,20 @@ class ReportGenerator:
         ]
 
         (self.out / "modernization-report.md").write_text("\n".join(lines), encoding="utf-8")
+
+    def _write_xai_section(self, findings):
+        lines = ["## Explainable AI (XAI) Insights\n"]
+        if not findings:
+            lines.append("No findings available.\n")
+            return lines
+
+        for item in findings:
+            lines.append(f"Issue: {item.title}")
+            lines.append(f"Why: {item.xai.why_it_matters if item.xai else item.description}")
+            lines.append(f"Fix: {item.xai.suggested_fix if item.xai else item.recommendation or 'Code update required.'}")
+            lines.append(f"Impact: {item.xai.impact if item.xai else 'Improves maintainability.'}\n")
+
+        return lines
 
     # ── Bob Prompts ────────────────────────────────────────────────────────
 
